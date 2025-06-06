@@ -1,0 +1,2 @@
+- Para que serve os arquivos __init__.py vazios: servem para que o Python reconheça as pastas como "pacotes",
+permitindo que a gente importe os arquivos de forma organizada, como "from models.produto import Produto".

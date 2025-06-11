@@ -23,7 +23,7 @@ class Produto:
         self.fabricante = fabricante
         self.categoria = categoria
 
-    # metodo:
+    # metodo para representar o produto com as principais atribuições
 
     def __repr__(self):
         return f"Produto(Código: '{self.codigo}', Nome: '{self.nome}', Lote: '{self.lote}')"

@@ -1,6 +1,8 @@
 import json
 import os
 from Models.produto import Produto
+from Models.engradado import Engradado
+from Estrutura.pilha import Pilha
 from Core.estoque import Estoque
 
 CAMINHO_CATALOGO = 'catalogo_produtos.json'
@@ -66,3 +68,42 @@ def salvar_estado_estoque(estoque: Estoque):
     with open(ESTADO_SISTEMA_PATH, 'w', encoding='utf-8') as f:
         json.dump(dados_estoque, f, indent=4, ensure_ascii=False)
     print("Estado do estoque salvo com sucesso!")
+
+def carregar_estado_estoque() -> Estoque:
+    print("Carregando estado do estoque...")
+    try:
+        with open(ESTADO_SISTEMA_PATH, 'r', encoding='utf-8') as f:
+            dados = json.load(f)
+        
+        # Cria um novo estoque com as dimensões salvas
+        estoque_carregado = Estoque(linhas=dados['linhas'], colunas=dados['colunas'])
+        
+        for i_linha, linha_de_pilhas in enumerate(dados['layout']):
+            for i_coluna, pilha_dict in enumerate(linha_de_pilhas):
+                
+                pilha_reconstruida = Pilha(capacidade=pilha_dict['capacidade'])
+                
+                # reconstroi cada engradado na pilha
+                for engradado_dict in pilha_dict['itens']:
+                    produto_dict = engradado_dict['produto']
+                    produto_obj = Produto(**produto_dict)
+                    
+                    engradado_obj = Engradado(produto_obj, engradado_dict['quantidade_maxima'])
+                    engradado_obj.quantidade_atual = engradado_dict['quantidade_atual']
+                    
+                    pilha_reconstruida.empilhar(engradado_obj)
+                
+                # coloca a pilha reconstruída no layout do estoque
+                estoque_carregado.layout[i_linha][i_coluna] = pilha_reconstruida
+
+        # Carrega também o mapa de produtos para manter a eficiência
+        # converter as chaves de tuplas em string de volta para tuplas
+        mapa_produtos_reconstruido = {k: [tuple(v) for v in val] for k, val in dados['mapa_produtos'].items()}
+        estoque_carregado.mapa_produtos = mapa_produtos_reconstruido
+        
+        print("Estado do estoque carregado com sucesso!")
+        return estoque_carregado
+
+    except (FileNotFoundError, json.JSONDecodeError):
+        print("Nenhum estado salvo encontrado ou arquivo corrompido. Iniciando com um estoque novo.")
+        return Estoque()

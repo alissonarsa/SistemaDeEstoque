@@ -126,7 +126,7 @@ def menu_estoque(estoque: Estoque, catalogo_produtos: list):
 def menu_principal():
     """Exibe o menu principal do sistema."""
     catalogo_produtos = gerenciador_json.listar_produtos()
-    estoque = Estoque()
+    estoque = gerenciador_json.carregar_estado_estoque()
     
     print("Bem-vindo ao Sistema de Gerenciamento de Estoque!")
     print(f"Catálogo com {len(catalogo_produtos)} produtos carregado.")

@@ -93,3 +93,31 @@ class Estoque:
             print(linha_str)
             print("-" * (len(linha_str) - 2))
         print("="*45 + "\n")
+    # Adicione este método dentro da classe Estoque em Core/estoque.py
+
+    def consultar_produto(self, codigo_produto: str):
+        if codigo_produto not in self.mapa_produtos or not self.mapa_produtos[codigo_produto]:
+            print(f"Produto '{codigo_produto}' não encontrado no estoque.")
+            return
+
+        locais = self.mapa_produtos[codigo_produto]
+        print(f"--- Consulta de Produto: '{codigo_produto}' ---")
+        print(f"Encontrado em {len(locais)} pilha(s), nas posições: {locais}")
+        
+        total_itens = 0
+        for linha, coluna in locais:
+            pilha = self.layout[linha][coluna]
+            total_itens += len(pilha) * pilha.ver_topo().quantidade_maxima
+
+        print(f"Quantidade total de itens (aproximada): {total_itens}")
+        print("------------------------------------------")
+
+    #  converte o objeto Estoque inteiro para um dicionario
+    def to_dict(self):
+        return {
+            "linhas": self.linhas,
+            "colunas": self.colunas,
+            # Converte cada pilha no layout para um dicionário
+            "layout": [[pilha.to_dict() for pilha in linha] for linha in self.layout],
+            "mapa_produtos": self.mapa_produtos
+        }

@@ -1,0 +1,41 @@
+[
+  {
+    "codigo": "REF001",
+    "lote": "LOTE-PADRAO",
+    "nome": "Refrigerante Cola 2L",
+    "peso": 2.0,
+    "data_validade": "2026-12-31",
+    "data_fabricacao": "2025-01-01",
+    "preco_compra": 3.50,
+    "preco_venda": 5.00,
+    "fornecedor": "Distribuidora de Bebidas XYZ",
+    "fabricante": "Refrigerantes S.A.",
+    "categoria": "Bebidas"
+  },
+  {
+    "codigo": "GRS005",
+    "lote": "LOTE-PADRAO",
+    "nome": "Arroz Integral 1kg",
+    "peso": 1.0,
+    "data_validade": "2027-10-15",
+    "data_fabricacao": "2025-04-10",
+    "preco_compra": 6.00,
+    "preco_venda": 8.50,
+    "fornecedor": "Grãos do Sul",
+    "fabricante": "Alimentos da Terra",
+    "categoria": "Grãos"
+  },
+  {
+    "codigo": "LTC012",
+    "lote": "LOTE-PADRAO",
+    "nome": "Leite Integral 1L",
+    "peso": 1.0,
+    "data_validade": "2025-08-01",
+    "data_fabricacao": "2025-05-20",
+    "preco_compra": 4.00,
+    "preco_venda": 5.50,
+    "fornecedor": "Cooperativa Leiteira",
+    "fabricante": "Fazenda Feliz",
+    "categoria": "Laticínios"
+  }
+]

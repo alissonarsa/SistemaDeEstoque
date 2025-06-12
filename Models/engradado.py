@@ -43,3 +43,11 @@ class Engradado:
     def __repr__(self):
         return (f"Engradado(Produto: '{self.produto.nome}', "
                 f"Ocupação: {self.quantidade_atual}/{self.quantidade_maxima})")
+    
+    # converte o objeto Engradado para um dicionario
+    def to_dict(self):
+        return {
+            "produto": self.produto.to_dict(), # Chama o to_dict() do produto aninhado
+            "quantidade_maxima": self.quantidade_maxima,
+            "quantidade_atual": self.quantidade_atual
+        }

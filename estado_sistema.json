@@ -1,0 +1,208 @@
+{
+    "linhas": 8,
+    "colunas": 5,
+    "layout": [
+        [
+            {
+                "capacidade": 5,
+                "itens": [
+                    {
+                        "produto": {
+                            "codigo": "REF001",
+                            "lote": "LOTE-PADRAO",
+                            "nome": "Refrigerante Cola 2L",
+                            "peso": 2.0,
+                            "data_validade": "2026-12-31",
+                            "data_fabricacao": "2025-01-01",
+                            "preco_compra": 3.5,
+                            "preco_venda": 5.0,
+                            "fornecedor": "Distribuidora de Bebidas XYZ",
+                            "fabricante": "Refrigerantes S.A.",
+                            "categoria": "Bebidas"
+                        },
+                        "quantidade_maxima": 50,
+                        "quantidade_atual": 0
+                    }
+                ]
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            }
+        ],
+        [
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            }
+        ],
+        [
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            }
+        ],
+        [
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            }
+        ],
+        [
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            }
+        ],
+        [
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            }
+        ],
+        [
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            }
+        ],
+        [
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            },
+            {
+                "capacidade": 5,
+                "itens": []
+            }
+        ]
+    ],
+    "mapa_produtos": {
+        "REF001": [
+            [
+                0,
+                0
+            ]
+        ]
+    }
+}

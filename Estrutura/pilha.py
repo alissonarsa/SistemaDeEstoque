@@ -49,3 +49,10 @@ class Pilha:
             rep += f"  {item}\n"
         rep += "--- BASE ---"
         return rep
+    
+    # converte o objeto Pilha para um dicionario
+    def to_dict(self):
+        return {
+            "capacidade": self.capacidade,
+            "itens": [item.to_dict() for item in self.itens]
+        }

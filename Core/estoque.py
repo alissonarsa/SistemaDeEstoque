@@ -93,7 +93,6 @@ class Estoque:
             print(linha_str)
             print("-" * (len(linha_str) - 2))
         print("="*45 + "\n")
-    # Adicione este método dentro da classe Estoque em Core/estoque.py
 
     def consultar_produto(self, codigo_produto: str):
         if codigo_produto not in self.mapa_produtos or not self.mapa_produtos[codigo_produto]:
@@ -112,7 +111,7 @@ class Estoque:
         print(f"Quantidade total de itens (aproximada): {total_itens}")
         print("------------------------------------------")
 
-    #  converte o objeto Estoque inteiro para um dicionario
+    # converte o objeto Estoque inteiro para um dicionario
     def to_dict(self):
         return {
             "linhas": self.linhas,

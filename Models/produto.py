@@ -27,3 +27,20 @@ class Produto:
 
     def __repr__(self):
         return f"Produto(Código: '{self.codigo}', Nome: '{self.nome}', Lote: '{self.lote}')"
+    
+    # converte o objeto Produto para um dicionário serializável
+    def to_dict(self):
+        return {
+            "codigo": self.codigo,
+            "lote": self.lote,
+            "nome": self.nome,
+            "peso": self.peso,
+            # Converte as datas para string para salvar no JSON
+            "data_validade": self.data_validade.isoformat(),
+            "data_fabricacao": self.data_fabricacao.isoformat(),
+            "preco_compra": self.preco_compra,
+            "preco_venda": self.preco_venda,
+            "fornecedor": self.fornecedor,
+            "fabricante": self.fabricante,
+            "categoria": self.categoria
+        }

@@ -6,6 +6,7 @@ from Estrutura.pilha import Pilha
 from Core.estoque import Estoque
 from Estrutura.fila import Fila
 from Models.pedido import Pedido, ItemPedido
+import datetime
 
 CAMINHO_CATALOGO = 'catalogo_produtos.json'
 ESTADO_SISTEMA_PATH = 'estado_sistema.json'

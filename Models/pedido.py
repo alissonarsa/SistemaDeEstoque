@@ -25,3 +25,10 @@ class Pedido:
         itens_str = ', '.join([f"{item.quantidade}x '{item.codigo_produto}'" for item in self.itens_pedido])
         
         return (f"Pedido(Solicitante: '{self.nome_solicitante}', Data: {data_formatada}, Itens: [{itens_str}])")
+
+    def to_dict(self):
+        return {
+            "nome_solicitante": self.nome_solicitante,
+            "data_solicitacao": self.data_solicitacao.isoformat(),
+            "itens_pedido": [item._asdict() for item in self.itens_pedido]
+        }

@@ -1,10 +1,14 @@
+import datetime
 from Core import gerenciador_json
 from Core.estoque import Estoque
+from Core.processador import processar_pedidos
+from Core.relatorios import gerar_relatorio_historico, gerar_relatorio_itens_em_falta, gerar_relatorio_vencimento
+from Estrutura.fila import Fila
 from Models.produto import Produto
 from Models.engradado import Engradado
-from Estrutura.fila import Fila
 from Models.pedido import Pedido
-from Core.processador import processar_pedidos
+
+# --- FUNÇÃO AUXILIAR ---
 
 def encontrar_produto_no_catalogo(catalogo, codigo):
     for p_dict in catalogo:
@@ -89,7 +93,6 @@ def menu_estoque(estoque: Estoque, catalogo_produtos: list):
 
         if opcao == "1":
             estoque.visualizar_estoque()
-
         elif opcao == "2":
             print("\n--- ADICIONAR ENGRADADO ---")
             codigo = input("Digite o código do produto do engradado: ")
@@ -104,26 +107,22 @@ def menu_estoque(estoque: Estoque, catalogo_produtos: list):
                     print("ERRO: Capacidade deve ser um número inteiro.")
             else:
                 print("ERRO: Produto não encontrado no catálogo.")
-
         elif opcao == "3":
             print("\n--- REMOVER ENGRADADO ---")
             codigo = input("Digite o código do produto a ser removido: ")
             engradado_removido = estoque.remover_engradado(codigo)
             if engradado_removido:
                 print(f"Um engradado de '{engradado_removido.produto.nome}' foi removido com sucesso.")
-
         elif opcao == "4":
              print("\n--- CONSULTAR PRODUTO ---")
              codigo = input("Digite o código do produto a ser consultado: ")
              estoque.consultar_produto(codigo)
-
         elif opcao == "0":
             break
         else:
             print("Opção inválida. Tente novamente.")
 
 def menu_pedidos(fila: Fila, estoque: Estoque, historico: list, catalogo: list):
-
     while True:
         print("\n--- MENU DE PEDIDOS ---")
         print("1. Registrar novo pedido na fila")
@@ -152,7 +151,6 @@ def menu_pedidos(fila: Fila, estoque: Estoque, historico: list, catalogo: list):
             if pedido.itens_pedido:
                 fila.enfileirar(pedido)
                 print("Pedido registrado na fila com sucesso!")
-
         elif opcao == "2":
             print("\n--- FILA DE PEDIDOS PENDENTES ---")
             if fila.esta_vazia():
@@ -160,44 +158,64 @@ def menu_pedidos(fila: Fila, estoque: Estoque, historico: list, catalogo: list):
             else:
                 print(fila)
             print("---------------------------------")
-
         elif opcao == "3":
             processar_pedidos(fila, estoque, historico)
-            
         elif opcao == "0":
             break
         else:
             print("Opção inválida.")
 
+def menu_relatorios(estoque: Estoque, historico_pedidos: list):
+    """Exibe o menu para geração de relatórios."""
+    while True:
+        print("\n--- MENU DE RELATÓRIOS ---")
+        print("1. Relatório de Produtos Próximos ao Vencimento")
+        print("2. Relatório de Itens em Falta no Estoque")
+        print("3. Histórico de Pedidos Atendidos")
+        print("0. Voltar ao menu principal")
+        opcao = input("Escolha uma opção: ")
+
+        if opcao == "1":
+            gerar_relatorio_vencimento(estoque)
+        elif opcao == "2":
+            gerar_relatorio_itens_em_falta(estoque)
+        elif opcao == "3":
+            gerar_relatorio_historico(historico_pedidos)
+        elif opcao == "0":
+            break
+        else:
+            print("Opção inválida.")
 
 def menu_principal():
+    estoque, fila_de_pedidos, pedidos_atendidos = gerenciador_json.carregar_estado_sistema()
     catalogo_produtos = gerenciador_json.listar_produtos()
-    estoque = gerenciador_json.carregar_estado_estoque()
     
-    print("Bem-vindo ao Sistema de Gerenciamento de Estoque!")
-    print(f"Catálogo com {len(catalogo_produtos)} produtos carregado.")
+    print("\nBem-vindo ao Sistema de Gerenciamento de Estoque!")
     
     while True:
         print("\n===== MENU PRINCIPAL =====")
         print("1. Gerenciar Catálogo de Produtos")
         print("2. Gerenciar Estoque")
         print("3. Gerenciar Pedidos")
+        print("4. Gerar Relatórios")
         print("0. Sair")
         opcao = input("Escolha uma opção: ")
 
         if opcao == "1":
             menu_produtos()
             catalogo_produtos = gerenciador_json.listar_produtos()
-        
         elif opcao == "2":
             menu_estoque(estoque, catalogo_produtos)
-            
         elif opcao == "3":
             menu_pedidos(fila_de_pedidos, estoque, pedidos_atendidos, catalogo_produtos)
+        elif opcao == "4":
+            menu_relatorios(estoque, pedidos_atendidos)
         elif opcao == "0":
             gerenciador_json.salvar_estado_sistema(estoque, fila_de_pedidos, pedidos_atendidos)
             print("Estado do sistema salvo. Saindo...")
             break
+        else:
+            print("Opção inválida. Tente novamente.")
 
 # --- Ponto de partida do programa ---
 if __name__ == "__main__":

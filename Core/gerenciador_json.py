@@ -74,41 +74,56 @@ def salvar_estado_sistema(estoque: Estoque, fila: Fila, historico: list):
     print("Estado do sistema salvo com sucesso!")
 
 # carrega o estado completo do sistema. Se não houver estado salvo, retorna objetos novos
+# Em Core/gerenciador_json.py, substitua a função carregar_estado_sistema por esta versão completa
+
 def carregar_estado_sistema() -> (Estoque, Fila, list):
+    """Carrega o estado completo do sistema. Se não houver estado salvo, retorna objetos novos."""
     print("Carregando estado do sistema...")
     try:
         with open(ESTADO_SISTEMA_PATH, 'r', encoding='utf-8') as f:
             dados = json.load(f)
         
-        dados_estoque = dados['estoque']
-        estoque_carregado = Estoque(linhas=dados_estoque['linhas'], colunas=dados_estoque['colunas'])
-        for i, linha in enumerate(dados_estoque['layout']):
-            for j, p_dict in enumerate(linha):
-                pilha = Pilha(p_dict['capacidade'])
-                for e_dict in p_dict['itens']:
-                    prod_obj = Produto(**e_dict['produto'])
-                    eng_obj = Engradado(prod_obj, e_dict['quantidade_maxima'])
-                    eng_obj.quantidade_atual = e_dict['quantidade_atual']
-                    pilha.empilhar(eng_obj)
-                estoque_carregado.layout[i][j] = pilha
-        estoque_carregado.mapa_produtos = {k: [tuple(v) for v in val] for k, val in dados_estoque['mapa_produtos'].items()}
+        dados_estoque = dados.get('estoque', {})
+        estoque_carregado = Estoque(linhas=dados_estoque.get('linhas', 8), colunas=dados_estoque.get('colunas', 5))
+        
+        layout_salvo = dados_estoque.get('layout', [])
+        for i_linha, linha_de_pilhas in enumerate(layout_salvo):
+            for i_coluna, pilha_dict in enumerate(linha_de_pilhas):
+                pilha_reconstruida = Pilha(capacidade=pilha_dict.get('capacidade', 5))
+                for engradado_dict in pilha_dict.get('itens', []):
+                    produto_dict = engradado_dict.get('produto', {})
+                    if not produto_dict: continue
+                    
+                    produto_obj = Produto(**produto_dict)
+                    engradado_obj = Engradado(produto_obj, engradado_dict.get('quantidade_maxima', 0))
+                    engradado_obj.quantidade_atual = engradado_dict.get('quantidade_atual', 0)
+                    pilha_reconstruida.empilhar(engradado_obj)
+                
+                estoque_carregado.layout[i_linha][i_coluna] = pilha_reconstruida
+
+        estoque_carregado.mapa_produtos = dados_estoque.get('mapa_produtos', {})
 
         fila_carregada = Fila()
-        for ped_dict in dados['fila_de_pedidos']['itens']:
+        dados_fila = dados.get('fila_de_pedidos', {})
+        for ped_dict in dados_fila.get('itens', []):
             pedido_obj = Pedido(ped_dict['nome_solicitante'])
             pedido_obj.data_solicitacao = datetime.date.fromisoformat(ped_dict['data_solicitacao'])
-            for item_dict in ped_dict['itens_pedido']:
-                pedido_obj.adicionar_item(item_dict['codigo_produto'], item_dict['quantidade'])
+            for item_dict in ped_dict.get('itens_pedido', []):
+                pedido_obj.itens_pedido.append(ItemPedido(**item_dict)) # Reconstrói o ItemPedid
             fila_carregada.enfileirar(pedido_obj)
             
         historico_carregado = []
-        for ped_dict in dados['historico_de_pedidos']:
+        dados_historico = dados.get('historico_de_pedidos', [])
+        for ped_dict in dados_historico:
              pedido_obj = Pedido(ped_dict['nome_solicitante'])
+             pedido_obj.data_solicitacao = datetime.date.fromisoformat(ped_dict['data_solicitacao'])
+             for item_dict in ped_dict.get('itens_pedido', []):
+                pedido_obj.itens_pedido.append(ItemPedido(**item_dict))
              historico_carregado.append(pedido_obj)
 
         print("Estado do sistema carregado com sucesso!")
         return estoque_carregado, fila_carregada, historico_carregado
 
-    except (FileNotFoundError, KeyError):
-        print("Nenhum estado salvo encontrado. Iniciando um sistema novo.")
+    except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
+        print(f"Nenhum estado salvo válido encontrado (erro: {e}). Iniciando um sistema novo.")
         return Estoque(), Fila(), []

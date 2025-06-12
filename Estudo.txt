@@ -3,3 +3,4 @@ permitindo que a gente importe os arquivos de forma organizada, como "from model
 
 !!!! criar função para salvar o produto e o engradado e json
 !!!! armazenar pilha
+!!!! armazenar fila

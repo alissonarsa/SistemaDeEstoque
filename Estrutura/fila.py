@@ -36,3 +36,10 @@ class Fila:
         
         # Mostra a fila da frente para trás
         return f"Fila: [INÍCIO] {', '.join(str(item) for item in self.itens)} [FIM]"
+    
+    # converte o objeto Fila para um dicionario
+
+    def to_dict(self):
+        return {
+            "itens": [item.to_dict() for item in self.itens]
+        }

@@ -2,13 +2,13 @@ from Core import gerenciador_json
 from Core.estoque import Estoque
 from Models.produto import Produto
 from Models.engradado import Engradado
-# (Outras importações como Fila e Pedido serão usadas nos próximos menus)
+from Estrutura.fila import Fila
+from Models.pedido import Pedido
+from Core.processador import processar_pedidos
 
 def encontrar_produto_no_catalogo(catalogo, codigo):
-    """Função auxiliar para encontrar um produto na lista do catálogo pelo código."""
     for p_dict in catalogo:
         if p_dict['codigo'] == codigo:
-            # Retorna um objeto Produto criado a partir do dicionário
             return Produto(**p_dict)
     return None
 
@@ -122,9 +122,55 @@ def menu_estoque(estoque: Estoque, catalogo_produtos: list):
         else:
             print("Opção inválida. Tente novamente.")
 
+def menu_pedidos(fila: Fila, estoque: Estoque, historico: list, catalogo: list):
+
+    while True:
+        print("\n--- MENU DE PEDIDOS ---")
+        print("1. Registrar novo pedido na fila")
+        print("2. Visualizar fila de pedidos pendentes")
+        print("3. Processar TODOS os pedidos da fila")
+        print("0. Voltar ao menu principal")
+        opcao = input("Escolha uma opção: ")
+
+        if opcao == "1":
+            print("\n--- REGISTRAR NOVO PEDIDO ---")
+            solicitante = input("Nome do solicitante: ")
+            pedido = Pedido(solicitante)
+            while True:
+                codigo = input("Digite o código do produto (ou 'fim' para terminar): ")
+                if codigo.lower() == 'fim':
+                    break
+                produto_obj = encontrar_produto_no_catalogo(catalogo, codigo)
+                if produto_obj:
+                    try:
+                        qtd = int(input(f"Quantidade de '{produto_obj.nome}': "))
+                        pedido.adicionar_item(codigo, qtd)
+                    except ValueError:
+                        print("ERRO: Quantidade deve ser um número.")
+                else:
+                    print("ERRO: Produto não encontrado no catálogo.")
+            if pedido.itens_pedido:
+                fila.enfileirar(pedido)
+                print("Pedido registrado na fila com sucesso!")
+
+        elif opcao == "2":
+            print("\n--- FILA DE PEDIDOS PENDENTES ---")
+            if fila.esta_vazia():
+                print("Não há pedidos na fila.")
+            else:
+                print(fila)
+            print("---------------------------------")
+
+        elif opcao == "3":
+            processar_pedidos(fila, estoque, historico)
+            
+        elif opcao == "0":
+            break
+        else:
+            print("Opção inválida.")
+
 
 def menu_principal():
-    """Exibe o menu principal do sistema."""
     catalogo_produtos = gerenciador_json.listar_produtos()
     estoque = gerenciador_json.carregar_estado_estoque()
     
@@ -147,15 +193,11 @@ def menu_principal():
             menu_estoque(estoque, catalogo_produtos)
             
         elif opcao == "3":
-            print("Opção 'Gerenciar Pedidos' a ser implementada.")
-
+            menu_pedidos(fila_de_pedidos, estoque, pedidos_atendidos, catalogo_produtos)
         elif opcao == "0":
-            # Salva o estado do estoque antes de sair
-            gerenciador_json.salvar_estado_estoque(estoque)
-            print("Estado do sistema salvo. Saindo do sistema. Até logo!")
+            gerenciador_json.salvar_estado_sistema(estoque, fila_de_pedidos, pedidos_atendidos)
+            print("Estado do sistema salvo. Saindo...")
             break
-        else:
-            print("Opção inválida. Tente novamente.")
 
 # --- Ponto de partida do programa ---
 if __name__ == "__main__":

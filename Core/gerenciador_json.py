@@ -12,7 +12,7 @@ CAMINHO_CATALOGO = 'catalogo_produtos.json'
 ESTADO_SISTEMA_PATH = 'estado_sistema.json'
 
 def _ler_catalogo():
-    """Função auxiliar (privada) para ler os dados do arquivo JSON."""
+
     if not os.path.exists(CAMINHO_CATALOGO):
         return []
     try:
@@ -62,7 +62,6 @@ def alterar_produto(codigo, dados_para_alterar):
         _salvar_catalogo(produtos)
     return produto_encontrado
 
-# salva o estado completo do sistema (estoque, fila, histórico) em um arquivo JSON
 def salvar_estado_sistema(estoque: Estoque, fila: Fila, historico: list):
     print("\nSalvando estado do sistema...")
     estado_completo = {

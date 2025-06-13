@@ -28,25 +28,115 @@
                 },
                 {
                     "capacidade": 5,
-                    "itens": []
+                    "itens": [
+                        {
+                            "produto": {
+                                "codigo": "CAF010",
+                                "lote": "LOTE-CAFE",
+                                "nome": "Café Torrado 500g",
+                                "peso": 0.5,
+                                "data_validade": "2026-05-10",
+                                "data_fabricacao": "2025-06-01",
+                                "preco_compra": 8.0,
+                                "preco_venda": 12.0,
+                                "fornecedor": "Cafés do Brasil",
+                                "fabricante": "Café Bom Dia",
+                                "categoria": "Bebidas"
+                            },
+                            "quantidade_maxima": 40,
+                            "quantidade_atual": 0
+                        }
+                    ]
                 },
                 {
                     "capacidade": 5,
-                    "itens": []
+                    "itens": [
+                        {
+                            "produto": {
+                                "codigo": "MAC002",
+                                "lote": "LOTE-MASSA",
+                                "nome": "Macarrão Espaguete 500g",
+                                "peso": 0.5,
+                                "data_validade": "2027-01-15",
+                                "data_fabricacao": "2025-07-10",
+                                "preco_compra": 3.0,
+                                "preco_venda": 5.0,
+                                "fornecedor": "Massas Itália",
+                                "fabricante": "Pasta & Cia",
+                                "categoria": "Massas"
+                            },
+                            "quantidade_maxima": 20,
+                            "quantidade_atual": 0
+                        }
+                    ]
                 },
                 {
                     "capacidade": 5,
-                    "itens": []
+                    "itens": [
+                        {
+                            "produto": {
+                                "codigo": "OLE004",
+                                "lote": "LOTE-OLEO",
+                                "nome": "Óleo de Soja 900ml",
+                                "peso": 0.9,
+                                "data_validade": "2026-11-30",
+                                "data_fabricacao": "2025-10-15",
+                                "preco_compra": 5.0,
+                                "preco_venda": 7.0,
+                                "fornecedor": "Óleos Brasil",
+                                "fabricante": "Soja S.A.",
+                                "categoria": "Óleos"
+                            },
+                            "quantidade_maxima": 70,
+                            "quantidade_atual": 0
+                        }
+                    ]
                 },
                 {
                     "capacidade": 5,
-                    "itens": []
+                    "itens": [
+                        {
+                            "produto": {
+                                "codigo": "FAR005",
+                                "lote": "LOTE-FARINHA",
+                                "nome": "Farinha de Trigo 1kg",
+                                "peso": 1.0,
+                                "data_validade": "2027-09-10",
+                                "data_fabricacao": "2025-11-01",
+                                "preco_compra": 4.0,
+                                "preco_venda": 6.0,
+                                "fornecedor": "Moinhos do Sul",
+                                "fabricante": "Trigo Bom",
+                                "categoria": "Farinha"
+                            },
+                            "quantidade_maxima": 15,
+                            "quantidade_atual": 0
+                        }
+                    ]
                 }
             ],
             [
                 {
                     "capacidade": 5,
-                    "itens": []
+                    "itens": [
+                        {
+                            "produto": {
+                                "codigo": "BIS006",
+                                "lote": "LOTE-BISCOITO",
+                                "nome": "Biscoito Cream Cracker 400g",
+                                "peso": 0.4,
+                                "data_validade": "2026-07-25",
+                                "data_fabricacao": "2025-12-10",
+                                "preco_compra": 3.2,
+                                "preco_venda": 5.0,
+                                "fornecedor": "Biscoitos Brasil",
+                                "fabricante": "Delícias S.A.",
+                                "categoria": "Biscoitos"
+                            },
+                            "quantidade_maxima": 90,
+                            "quantidade_atual": 0
+                        }
+                    ]
                 },
                 {
                     "capacidade": 5,
@@ -205,7 +295,37 @@
                     0
                 ]
             ],
-            "GRS005": []
+            "GRS005": [],
+            "CAF010": [
+                [
+                    0,
+                    1
+                ]
+            ],
+            "MAC002": [
+                [
+                    0,
+                    2
+                ]
+            ],
+            "OLE004": [
+                [
+                    0,
+                    3
+                ]
+            ],
+            "FAR005": [
+                [
+                    0,
+                    4
+                ]
+            ],
+            "BIS006": [
+                [
+                    1,
+                    0
+                ]
+            ]
         }
     },
     "fila_de_pedidos": {

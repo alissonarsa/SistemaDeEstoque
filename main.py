@@ -8,15 +8,11 @@ from Models.produto import Produto
 from Models.engradado import Engradado
 from Models.pedido import Pedido
 
-# --- FUNÇÃO AUXILIAR ---
-
 def encontrar_produto_no_catalogo(catalogo, codigo):
     for p_dict in catalogo:
         if p_dict['codigo'] == codigo:
             return Produto(**p_dict)
     return None
-
-# --- MENUS DA APLICAÇÃO ---
 
 def menu_produtos():
     """Exibe o menu de gerenciamento de produtos do catálogo."""
@@ -217,6 +213,6 @@ def menu_principal():
         else:
             print("Opção inválida. Tente novamente.")
 
-# --- Ponto de partida do programa ---
+# rodeee
 if __name__ == "__main__":
     menu_principal()
